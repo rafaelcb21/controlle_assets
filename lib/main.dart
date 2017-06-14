@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+
 import "card_saldo.dart";
 import "card_contas.dart";
 
@@ -42,9 +43,10 @@ class HomePage extends StatelessWidget {
         ],
       ),
     ),
-    body: new Column(
+    body: new ListView  (
       children: <Widget>[
         new CardSaldo(),
+        new CardContas(),
         new CardContas(),
       ],
     )

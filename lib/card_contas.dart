@@ -24,8 +24,8 @@ class CardContas extends StatelessWidget {
             ), 
             new ListTile(
               leading: new CircleAvatar(
-                backgroundImage: new AssetImage('lib/images/itau2.jpg'),
-                backgroundColor: new Color(0xFF1A5493),
+                backgroundImage: new AssetImage('lib/images/cef.jpg'),
+                backgroundColor: new Color(0xFFF5F5F5),
                 radius: 16.0,
               ),
               //leading: new Icon(
@@ -65,8 +65,8 @@ class CardContas extends StatelessWidget {
 
             new ListTile(
               leading: new CircleAvatar(
-                //backgroundImage: new AssetImage('lib/images/Caixa_Economica_Federal.svg'),
-                backgroundColor: new Color(0xFF26C6DA),
+                backgroundImage: new AssetImage('lib/images/itau.jpg'),
+                backgroundColor: new Color(0xFF1A5493),
                 radius: 16.0,
               ),
               title: new Text(
@@ -95,6 +95,47 @@ class CardContas extends StatelessWidget {
                 ),
               )
             ),
+
+            new Container(
+              padding: new EdgeInsets.only(left: 74.0),
+              child: new Divider(),
+            ),
+
+            new ListTile(
+              leading: new CircleAvatar(
+                backgroundImage: new AssetImage('lib/images/bb.jpg'),
+                backgroundColor: new Color(0xFFFDE100),
+                radius: 16.0,
+              ),
+              //leading: new Icon(
+              //  Icons.card_giftcard
+              //),
+              title: new Text(
+                'Banco do Brasil',
+                style: new TextStyle(
+                  fontSize: 13.0,
+                  fontFamily: 'Roboto',
+                  color: new Color(0xFF212121),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: new Text(
+                'Conta corrente',
+                style: new TextStyle(
+                  fontSize: 12.0,
+                  fontFamily: 'Roboto',
+                  color: new Color(0xFF9E9E9E)
+                ),
+              ),
+              trailing: new Text(
+                'R\$ 3.051,00',
+                style: new TextStyle(
+                  fontSize: 16.0,
+                  fontFamily: 'Roboto',
+                  color: new Color(0xFF26C6DA)
+                ),
+              )
+            )
           ]
         ),
       ),
