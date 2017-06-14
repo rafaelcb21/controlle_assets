@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CardContas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return new Container(
       padding: new EdgeInsets.only(bottom: 6.0, right: 6.0, left: 6.0),
       child: new  Card(
@@ -23,9 +24,13 @@ class CardContas extends StatelessWidget {
             ), 
             new ListTile(
               leading: new CircleAvatar(
-                backgroundImage: new AssetImage('img/Caixa_Economica_Federal.svg'),
-                radius: 18.0,
+                backgroundImage: new AssetImage('lib/images/itau2.jpg'),
+                backgroundColor: new Color(0xFF1A5493),
+                radius: 16.0,
               ),
+              //leading: new Icon(
+              //  Icons.card_giftcard
+              //),
               title: new Text(
                 'Caixa',
                 style: new TextStyle(
@@ -60,8 +65,9 @@ class CardContas extends StatelessWidget {
 
             new ListTile(
               leading: new CircleAvatar(
-                backgroundImage: new AssetImage('img/Caixa_Economica_Federal.svg'),
-                radius: 21.0,
+                //backgroundImage: new AssetImage('lib/images/Caixa_Economica_Federal.svg'),
+                backgroundColor: new Color(0xFF26C6DA),
+                radius: 16.0,
               ),
               title: new Text(
                 'Itau',
