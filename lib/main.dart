@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 
 import "card_saldo.dart";
 import "card_contas.dart";
+import "card_cartoes.dart";
 
 void main() {
   runApp(new ControlleApp());
@@ -47,7 +48,7 @@ class HomePage extends StatelessWidget {
       children: <Widget>[
         new CardSaldo(),
         new CardContas(),
-        new CardContas(),
+        new CardCartoes(),
       ],
     )
     

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class CardContas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     return new Container(
       padding: new EdgeInsets.only(bottom: 6.0, right: 6.0, left: 6.0),
       child: new  Card(
@@ -58,10 +57,10 @@ class CardContas extends StatelessWidget {
               )
             ),
 
-            new Container(
-              padding: new EdgeInsets.only(left: 74.0),
-              child: new Divider(),
-            ),
+            //new Container(
+            //  padding: new EdgeInsets.only(left: 74.0),
+            //  child: new Divider(),
+            //),
 
             new ListTile(
               leading: new CircleAvatar(
@@ -96,10 +95,10 @@ class CardContas extends StatelessWidget {
               )
             ),
 
-            new Container(
-              padding: new EdgeInsets.only(left: 74.0),
-              child: new Divider(),
-            ),
+            //new Container(
+            //  padding: new EdgeInsets.only(left: 74.0),
+            //  child: new Divider(),
+            //),
 
             new ListTile(
               leading: new CircleAvatar(

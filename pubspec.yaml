@@ -22,6 +22,10 @@ flutter:
   - lib/images/cef.jpg
   - lib/images/itau.jpg
   - lib/images/bb.jpg
+  - lib/images/visa.png
+  - lib/images/mastercard.png
+  - lib/images/cartao.png
+  - lib/images/amex.png
 
   #  - images/a_dot_ham.jpeg
 
