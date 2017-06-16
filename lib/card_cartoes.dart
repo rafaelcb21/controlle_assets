@@ -11,8 +11,8 @@ class CardCartoes extends StatelessWidget {
           new Container(
             padding: new EdgeInsets.only(right: 24.0),
             child: new CircleAvatar(
-              backgroundImage: new AssetImage('lib/images/cartao.png'), //0xFF306FC5 amex
-              backgroundColor: new Color(0xFFF5F5F5), //0xFFF5F5F5
+              backgroundImage: new AssetImage('lib/images/amex.png'), //0xFF306FC5 amex
+              backgroundColor: new Color(0xFF306FC5), //0xFFF5F5F5
               radius: 16.0,
             )
           ),
