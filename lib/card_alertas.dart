@@ -8,107 +8,117 @@ class CardAlertas extends StatelessWidget {
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          new Container(
-            width: 60.0,
-            //alignment: new FractionalOffset(0.5, 0.5),
-            decoration: new BoxDecoration(
-              border: new Border(
-                right: new BorderSide(style: BorderStyle.solid, color: new Color(0xFF9E9E9E)),
-                top: new BorderSide(style: BorderStyle.solid, color: new Color(0xFF9E9E9E)),
-                left: new BorderSide(style: BorderStyle.solid, color: new Color(0xFF9E9E9E)),
-                bottom: new BorderSide(style: BorderStyle.solid, color: new Color(0xFF9E9E9E)),
-                )
-            ),
-            child: new Column(
-              //crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                new Text(
-                  '0',
-                  style: new TextStyle(
-                    fontSize: 35.0,
-                    fontFamily: 'Roboto',
-                    color: new Color(0xFFF44336)
+          new Expanded(
+            child:new Container(
+              decoration: new BoxDecoration(
+                border: new Border(
+                  right: new BorderSide(style: BorderStyle.solid, color: new Color(0xFF9E9E9E)),
+                  //top: new BorderSide(style: BorderStyle.solid, color: new Color(0xFF9E9E9E)),
+                  //left: new BorderSide(style: BorderStyle.solid, color: new Color(0xFF9E9E9E)),
+                  //bottom: new BorderSide(style: BorderStyle.solid, color: new Color(0xFF9E9E9E)),
+                  )
+              ),
+              child: new Column(
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  new Text(
+                    '0',
+                    overflow: TextOverflow.ellipsis,
+                    style: new TextStyle(
+                      fontSize: 35.0,
+                      fontFamily: 'Roboto',
+                      color: new Color(0xFF66BB6A)
+                    ),
                   ),
-                ),
-                new Text(
-                  'contas a receber',
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: new TextStyle(
-                    fontSize: 12.0,
-                    fontFamily: 'Roboto',
-                    color: new Color(0xFF9E9E9E)
+                  new Container(
+                    width: 60.0,
+                    //decoration: new BoxDecoration(
+                    //  border: new Border.all( color: new Color(0xFF9E9E9E)),
+                    //),
+                    child: new Text(
+                      'contas a receber',
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      style: new TextStyle(
+                        fontSize: 12.0,
+                        fontFamily: 'Roboto',
+                        color: new Color(0xFF9E9E9E)
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          new Container(
-            width: 60.0,
-            decoration: new BoxDecoration(
-              border: new Border.all( color: new Color(0xFF9E9E9E)),
-              //border: new Border(right: new BorderSide(
-              //  style: BorderStyle.solid,
-              //  color: new Color(0xFF9E9E9E),
-              //))
-            ),
-            child: new Column(
-              //crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                new Text(
-                  '0',
-                  style: new TextStyle(
-                    fontSize: 35.0,
-                    fontFamily: 'Roboto',
-                    color: new Color(0xFFF44336)
-                  ),
-                ),
-                new Text(
-                  'contas a pagar',
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: new TextStyle(
-                    fontSize: 12.0,
-                    fontFamily: 'Roboto',
-                    color: new Color(0xFF9E9E9E)
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          new Container(
-            width: 60.0,
-            decoration: new BoxDecoration(
-              border: new Border.all( color: new Color(0xFF9E9E9E)),
-              //border: new Border(right: new BorderSide(
-              //  style: BorderStyle.solid,
-              //  color: new Color(0xFF9E9E9E),
-              //))
-            ),
-            child: new Column(
-              //crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                new Text(
-                  '0',
-                  style: new TextStyle(
-                    fontSize: 35.0,
-                    fontFamily: 'Roboto',
-                    color: new Color(0xFFF44336)
+          new Expanded(
+            child: new Container(
+              decoration: new BoxDecoration(
+                //border: new Border.all( color: new Color(0xFF9E9E9E)),
+                border: new Border(right: new BorderSide(
+                  style: BorderStyle.solid,
+                  color: new Color(0xFF9E9E9E),
+                ))
+              ),
+              child: new Column(
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  new Text(
+                    '0',
+                    overflow: TextOverflow.ellipsis,
+                    style: new TextStyle(
+                      fontSize: 35.0,
+                      fontFamily: 'Roboto',
+                      color: new Color(0xFFF44336)
+                    ),
                   ),
-                ),
-                new Text(
-                  'contas atrasadas',
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: new TextStyle(
-                    fontSize: 12.0,
-                    fontFamily: 'Roboto',
-                    color: new Color(0xFF9E9E9E)
-                  ),
-                ),
-              ],
-            ),
+                  new Container(
+                    width: 60.0,
+                    child: new Text(
+                      'contas a pagar',
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      style: new TextStyle(
+                        fontSize: 12.0,
+                        fontFamily: 'Roboto',
+                        color: new Color(0xFF9E9E9E)
+                      ),
+                    ),
+                  ),                  
+                ],
+              ),
+            )
           ),
+          new Expanded(
+            child: new Container(
+              child: new Column(
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  new Text(
+                    '0',
+                    overflow: TextOverflow.ellipsis,
+                    style: new TextStyle(
+                      fontSize: 35.0,
+                      fontFamily: 'Roboto',
+                      color: new Color(0xFFF44336)
+                    ),
+                  ),
+                  new Container(
+                    width: 60.0,
+                    child: new Text(
+                      'contas atrasadas',
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      style: new TextStyle(
+                        fontSize: 12.0,
+                        fontFamily: 'Roboto',
+                        color: new Color(0xFF9E9E9E)
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
