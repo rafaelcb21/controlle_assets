@@ -63,11 +63,23 @@ class HomePage extends StatelessWidget {
         showDialog(
           context: context, 
           child: new SimpleDialog(
-            title: new Text('Test'),
             children: <Widget>[
-              new RadioListTile(
-                title: new Text('Testing'), value: null, groupValue: null, onChanged: (value) {},
-              )
+              new FlatButton(
+                textColor: new Color(0xFF9E9E9E),
+                child: const Text('transferência'),
+                onPressed: () {},
+              ),
+              new FlatButton(
+                textColor: new Color(0xFF66BB6A),
+                child: const Text('receita'),
+                onPressed: () {},
+              ),
+              new FlatButton(
+                textColor: new Color(0xFFF44336),
+
+                child: new Text('despesa'),
+                onPressed: () {},
+              ),
             ],
           )
         );
