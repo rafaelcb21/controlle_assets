@@ -86,7 +86,7 @@ class CardContas extends StatelessWidget {
                 ),
               ),
               trailing: new Text(
-                'R\$ 3.051,00',
+                'R\$ 305.100,00',
                 style: new TextStyle(
                   fontSize: 16.0,
                   fontFamily: 'Roboto',

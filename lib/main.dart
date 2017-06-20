@@ -51,8 +51,26 @@ class HomePage extends StatelessWidget {
         new CardContas(),
         new CardCartoes(),
         new CardAlertas(),
+        new Container(
+          height: 70.0,
+        )
       ],
-    )
+    ),
+    floatingActionButton: new FloatingActionButton(
+      tooltip: 'Add',
+      child: new Icon(Icons.add),
+      backgroundColor: new Color(0xFFF44336),
+      onPressed: (){
+        new SimpleDialog(
+          title: new Text('Teste'),
+          children: <Widget>[
+            new RadioListTile(
+              title: new Text('Testando'), value: null, groupValue: null, onChanged: (value) {},
+            )
+          ],
+        );
+      },
+    ),
     
   );
 }
