@@ -57,20 +57,21 @@ class HomePage extends StatelessWidget {
       ],
     ),
     floatingActionButton: new FloatingActionButton(
-      tooltip: 'Add',
       child: new Icon(Icons.add),
       backgroundColor: new Color(0xFFF44336),
       onPressed: (){
-        new SimpleDialog(
-          title: new Text('Teste'),
-          children: <Widget>[
-            new RadioListTile(
-              title: new Text('Testando'), value: null, groupValue: null, onChanged: (value) {},
-            )
-          ],
+        showDialog(
+          context: context, 
+          child: new SimpleDialog(
+            title: new Text('Test'),
+            children: <Widget>[
+              new RadioListTile(
+                title: new Text('Testing'), value: null, groupValue: null, onChanged: (value) {},
+              )
+            ],
+          )
         );
-      },
-    ),
-    
+      }     
+    ),    
   );
 }
