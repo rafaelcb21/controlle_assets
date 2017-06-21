@@ -1,9 +1,10 @@
 import "package:flutter/material.dart";
 
-import "card_saldo.dart";
-import "card_contas.dart";
-import "card_cartoes.dart";
-import "card_alertas.dart";
+import "home/card_saldo.dart";
+import "home/card_contas.dart";
+import "home/card_cartoes.dart";
+import "home/card_alertas.dart";
+import "teclado/teclado.dart";
 
 void main() {
   runApp(new ControlleApp());
@@ -15,6 +16,10 @@ class ControlleApp extends StatelessWidget {
     return new MaterialApp(
       title: "Controlle Financeiro",
       home: new HomePage(),
+      routes: <String, WidgetBuilder> {
+        '/': (BuildContext context) => new HomePage(),
+        '/teclado': (BuildContext context) => new TecladoPage()
+      },
     );
   }
 }
@@ -128,7 +133,9 @@ class HomePage extends StatelessWidget {
                     )
                   ],
                 ),                
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/teclado');
+                },
               ),
             ],
           )
