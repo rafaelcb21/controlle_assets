@@ -66,18 +66,68 @@ class HomePage extends StatelessWidget {
             children: <Widget>[
               new FlatButton(
                 textColor: new Color(0xFF9E9E9E),
-                child: const Text('transferência'),
+                child: new Row(
+                  children: <Widget>[
+                    new Icon(
+                      Icons.add_circle,
+                      size: 24.0
+                    ),
+                    new Container(
+                      padding: new EdgeInsets.only(left: 16.0),
+                      child: new Text(
+                        'transferência',
+                        style: new TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: 16.0
+                        ),
+                      ),
+                    )
+                  ],
+                ),                
                 onPressed: () {},
               ),
               new FlatButton(
                 textColor: new Color(0xFF66BB6A),
-                child: const Text('receita'),
+                child: new Row(
+                  children: <Widget>[
+                    new Icon(
+                      Icons.add_circle,
+                      size: 24.0
+                    ),
+                    new Container(
+                      padding: new EdgeInsets.only(left: 16.0),
+                      child: new Text(
+                        'receita',
+                        style: new TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: 16.0
+                        ),
+                      ),
+                    )
+                  ],
+                ),                
                 onPressed: () {},
               ),
               new FlatButton(
                 textColor: new Color(0xFFF44336),
-
-                child: new Text('despesa'),
+                child: new Row(
+                  children: <Widget>[
+                    new Icon(
+                      Icons.add_circle,
+                      size: 24.0
+                    ),
+                    new Container(
+                      padding: new EdgeInsets.only(left: 16.0),
+                      child: new Text(
+                        'despesa',
+                        style: new TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: 16.0
+                        ),
+                      ),
+                    )
+                  ],
+                ),                
                 onPressed: () {},
               ),
             ],
