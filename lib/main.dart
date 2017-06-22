@@ -4,7 +4,7 @@ import "home/card_saldo.dart";
 import "home/card_contas.dart";
 import "home/card_cartoes.dart";
 import "home/card_alertas.dart";
-import "teclado/teclado.dart";
+import "conta/conta.dart";
 
 void main() {
   runApp(new ControlleApp());
@@ -18,7 +18,7 @@ class ControlleApp extends StatelessWidget {
       home: new HomePage(),
       routes: <String, WidgetBuilder> {
         '/': (BuildContext context) => new HomePage(),
-        '/teclado': (BuildContext context) => new TecladoPage()
+        '/conta': (BuildContext context) => new ContaPage()
       },
     );
   }
@@ -134,7 +134,8 @@ class HomePage extends StatelessWidget {
                   ],
                 ),                
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/teclado');
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushNamed('/conta');
                 },
               ),
             ],
