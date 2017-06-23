@@ -134,8 +134,9 @@ class HomePage extends StatelessWidget {
                   ],
                 ),                
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pushNamed('/conta');
+                  Navigator.popAndPushNamed(context, '/conta');
+                  //Navigator.of(context).pop();
+                  //Navigator.of(context).pushNamed('/conta');
                 },
               ),
             ],

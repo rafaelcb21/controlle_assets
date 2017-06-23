@@ -5,7 +5,7 @@ import 'teclado.dart';
 class ContaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => new Scaffold(
-    body: new ListView(
+    body: new Column(
       children: <Widget>[
          new Numero(),
          new Teclado(),
