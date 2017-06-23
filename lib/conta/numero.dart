@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Numero extends StatelessWidget {
+  Numero(this.color);
+  final Color color;
+
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -34,7 +37,7 @@ class Numero extends StatelessWidget {
           )
         ],
       ),
-      color: new Color(0xFFE57373),
+      color: color,
     );
   }
 }

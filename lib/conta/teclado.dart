@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Teclado extends StatelessWidget {
+  Teclado(this.color);
+  final Color color;
+
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -11,7 +14,7 @@ class Teclado extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   '1',
                   style: new TextStyle(
@@ -21,7 +24,7 @@ class Teclado extends StatelessWidget {
                 onPressed: () {},
               ),
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   '2',
                   style: new TextStyle(
@@ -31,7 +34,7 @@ class Teclado extends StatelessWidget {
                 onPressed: () {},
               ),
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   '3',
                   style: new TextStyle(
@@ -47,7 +50,7 @@ class Teclado extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   '4',
                   style: new TextStyle(
@@ -57,7 +60,7 @@ class Teclado extends StatelessWidget {
                 onPressed: () {},
               ),
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   '5',
                   style: new TextStyle(
@@ -67,7 +70,7 @@ class Teclado extends StatelessWidget {
                 onPressed: () {},
               ),
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   '6',
                   style: new TextStyle(
@@ -83,7 +86,7 @@ class Teclado extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   '7',
                   style: new TextStyle(
@@ -93,7 +96,7 @@ class Teclado extends StatelessWidget {
                 onPressed: () {},
               ),
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   '8',
                   style: new TextStyle(
@@ -103,7 +106,7 @@ class Teclado extends StatelessWidget {
                 onPressed: () {},
               ),
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   '9',
                   style: new TextStyle(
@@ -119,7 +122,7 @@ class Teclado extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   ' ',
                   style: new TextStyle(
@@ -129,7 +132,7 @@ class Teclado extends StatelessWidget {
                 onPressed: () {},
               ),
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
                 child: new Text(
                   '0',
                   style: new TextStyle(
@@ -139,7 +142,7 @@ class Teclado extends StatelessWidget {
                 onPressed: () {},
               ),
               new FlatButton(
-                textColor: new Color(0xFFE57373),
+                textColor: color,
 
                 child: new Icon(
                   Icons.backspace,

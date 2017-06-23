@@ -3,22 +3,27 @@ import 'numero.dart';
 import 'teclado.dart';
 
 class ContaPage extends StatelessWidget {
+  ContaPage(this.color);
+  final Color color;
+
   @override
   Widget build(BuildContext context) => new Scaffold(
     body: new Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,       
       children: <Widget>[
-        new Numero(),
-        new Teclado(),
-        new Stack(
-          alignment: new FractionalOffset(0.5, 1.0),
-          children: <Widget>[
-            new FloatingActionButton(
+        new Numero(color),
+        new Teclado(color),
+        new Flexible(
+          child: new Container(
+            padding: new EdgeInsets.only(bottom: 16.0),
+            child: new FloatingActionButton(
               elevation: 0.0,
               child: new Icon(Icons.check),
-              backgroundColor: new Color(0xFFE57373),
+              backgroundColor: color,
               onPressed: (){}
             )
-          ],
+          )         
         )
       ],
     ), 

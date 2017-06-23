@@ -32,7 +32,7 @@ class CardAlertas extends StatelessWidget {
                         style: new TextStyle(
                           fontSize: 35.0,
                           fontFamily: 'Roboto',
-                          color: new Color(0xFF66BB6A)
+                          color: new Color(0xFF00BFA5)
                         ),
                       ),
                       new Container(

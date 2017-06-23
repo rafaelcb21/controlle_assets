@@ -85,7 +85,7 @@ class CardSaldo extends StatelessWidget{
                         style: new TextStyle(
                           fontSize: 12.0,
                           fontFamily: 'Roboto',
-                          color: new Color(0xFF66BB6A),
+                          color: new Color(0xFF00BFA5),
                         ),
                       )
                     ],
@@ -133,7 +133,7 @@ class CardSaldo extends StatelessWidget{
                         style: new TextStyle(
                           fontSize: 12.0,
                           fontFamily: 'Roboto',
-                          color: new Color(0xFF66BB6A),
+                          color: new Color(0xFF00BFA5),
                         ),
                       )
                     ],

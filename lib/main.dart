@@ -18,7 +18,7 @@ class ControlleApp extends StatelessWidget {
       home: new HomePage(),
       routes: <String, WidgetBuilder> {
         '/home': (BuildContext context) => new HomePage(),
-        '/conta': (BuildContext context) => new ContaPage()
+        //'/conta': (BuildContext context) => new ContaPage()
       },
     );
   }
@@ -89,10 +89,15 @@ class HomePage extends StatelessWidget {
                     )
                   ],
                 ),                
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, new MaterialPageRoute(
+                    builder: (BuildContext context) => new ContaPage(new Color(0xFF9E9E9E)),
+                  ));
+                },
               ),
               new FlatButton(
-                textColor: new Color(0xFF66BB6A),
+                textColor: new Color(0xFF00BFA5),
                 child: new Row(
                   children: <Widget>[
                     new Icon(
@@ -111,10 +116,15 @@ class HomePage extends StatelessWidget {
                     )
                   ],
                 ),                
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, new MaterialPageRoute(
+                    builder: (BuildContext context) => new ContaPage(new Color(0xFF00BFA5)),//0xFF00D39D
+                  ));
+                },
               ),
               new FlatButton(
-                textColor: new Color(0xFFF44336),
+                textColor: new Color(0xFFE57373),
                 child: new Row(
                   children: <Widget>[
                     new Icon(
@@ -133,10 +143,14 @@ class HomePage extends StatelessWidget {
                     )
                   ],
                 ),                
+                //onPressed: () {
+                //  Navigator.popAndPushNamed(context, '/conta');
+                //},
                 onPressed: () {
-                  Navigator.popAndPushNamed(context, '/conta');
-                  //Navigator.of(context).pop();
-                  //Navigator.of(context).pushNamed('/conta');
+                  Navigator.pop(context);
+                  Navigator.push(context, new MaterialPageRoute(
+                    builder: (BuildContext context) => new ContaPage(new Color(0xFFE57373)),
+                  ));
                 },
               ),
             ],
