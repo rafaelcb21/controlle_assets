@@ -17,7 +17,7 @@ class ControlleApp extends StatelessWidget {
       title: "Controlle Financeiro",
       home: new HomePage(),
       routes: <String, WidgetBuilder> {
-        '/': (BuildContext context) => new HomePage(),
+        '/home': (BuildContext context) => new HomePage(),
         '/conta': (BuildContext context) => new ContaPage()
       },
     );
@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
     ),
     floatingActionButton: new FloatingActionButton(
       child: new Icon(Icons.add),
-      backgroundColor: new Color(0xFFF44336),
+      backgroundColor: new Color(0xFFE57373),
       onPressed: (){
         showDialog(
           context: context, 
