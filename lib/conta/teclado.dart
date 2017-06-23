@@ -4,7 +4,7 @@ class Teclado extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      padding: new EdgeInsets.only(right: 15.0, left: 15.0, top: 47.0),
+      padding: new EdgeInsets.only(right: 15.0, left: 15.0, top: 47.0, bottom: 20.0),
       child: new Column(
         children: <Widget>[
           new Row(
