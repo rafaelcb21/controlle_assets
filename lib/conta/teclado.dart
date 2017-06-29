@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class Teclado extends StatelessWidget {
-  Teclado(this.color);
+  Teclado(this.color, this.numeros);
   final Color color;
+  final ValueNotifier<List<int>> numeros;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,9 @@ class Teclado extends StatelessWidget {
                     fontSize: 35.0
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..add(1);
+                },
               ),
               new FlatButton(
                 textColor: color,
@@ -31,7 +35,9 @@ class Teclado extends StatelessWidget {
                     fontSize: 35.0
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..add(2);
+                },
               ),
               new FlatButton(
                 textColor: color,
@@ -41,7 +47,9 @@ class Teclado extends StatelessWidget {
                     fontSize: 35.0
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..add(3);
+                },
               ),
             ],
           ),
@@ -57,7 +65,9 @@ class Teclado extends StatelessWidget {
                     fontSize: 35.0
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..add(4);
+                },
               ),
               new FlatButton(
                 textColor: color,
@@ -67,7 +77,9 @@ class Teclado extends StatelessWidget {
                     fontSize: 35.0
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..add(5);
+                },
               ),
               new FlatButton(
                 textColor: color,
@@ -77,7 +89,9 @@ class Teclado extends StatelessWidget {
                     fontSize: 35.0
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..add(6);
+                },
               ),
             ],
           ),
@@ -93,7 +107,9 @@ class Teclado extends StatelessWidget {
                     fontSize: 35.0
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..add(7);
+                },
               ),
               new FlatButton(
                 textColor: color,
@@ -103,7 +119,9 @@ class Teclado extends StatelessWidget {
                     fontSize: 35.0
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..add(8);
+                },
               ),
               new FlatButton(
                 textColor: color,
@@ -113,7 +131,9 @@ class Teclado extends StatelessWidget {
                     fontSize: 35.0
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..add(9);
+                },
               ),
             ],
           ),
@@ -139,7 +159,9 @@ class Teclado extends StatelessWidget {
                     fontSize: 35.0
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..add(0);
+                },
               ),
               new FlatButton(
                 textColor: color,
@@ -148,7 +170,9 @@ class Teclado extends StatelessWidget {
                   Icons.backspace,
                   size: 35.0
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  numeros.value = new List.from(numeros.value)..removeLast();
+                },
               ),
             ],
           ),
