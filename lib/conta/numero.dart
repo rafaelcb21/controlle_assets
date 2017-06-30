@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
+
 
 class NumeroDisplay extends AnimatedWidget {
   final Color color;  
@@ -21,8 +23,10 @@ class NumeroDisplay extends AnimatedWidget {
       List<int> decimalLista = numerosLista.getRange(numerosLista.length -2, numerosLista.length);
       String inteiroListaString = inteiroLista.map((i) => i.toString()).join('');
       String decimalListaString = decimalLista.map((i) => i.toString()).join('');
-      
-      return  inteiroListaString + ',' + decimalListaString;
+
+      var f = new NumberFormat("#,###,###,###,###.00", "pt_BR");
+      var valor = f.format(double.parse(inteiroListaString + '.' + decimalListaString));
+      return  valor;
 
     }
   }
