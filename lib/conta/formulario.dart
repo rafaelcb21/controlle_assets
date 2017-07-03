@@ -41,26 +41,60 @@ class FormularioPage extends StatelessWidget {
       color: color,
     );
 
-    return new Scaffold(
-      body: new Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,       
+    Widget fields = new Container(
+      padding: new EdgeInsets.all(18.0),
+      child: new Column(
         children: <Widget>[
-          displayNumber,
-          
-          new Flexible(
-            child: new Container(
-              padding: new EdgeInsets.only(bottom: 16.0),
-              child: new FloatingActionButton(
-                elevation: 0.0,
-                child: new Icon(Icons.check),
-                backgroundColor: color,
-                onPressed: (){}
-              )
-            )         
-          )
+          new InkWell(
+            //onTap: onPressed,
+            child: new InputDecorator(
+              decoration: new InputDecoration(
+                labelText: 'Data',
+
+              ),
+              baseStyle: new TextStyle(
+                fontSize: 12.0,
+                fontFamily: 'Roboto',
+                color: new Color(0xFF9E9E9E)
+              ),
+              
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  new Text('DE', style: Theme.of(context).textTheme.title),
+                ],
+              ),
+            ),
+          ),
         ],
-      ), 
+      ),
+    );
+
+    return new Scaffold(
+      body: new ListView(        
+        children: <Widget>[
+          new Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,       
+            children: <Widget>[
+              displayNumber,
+              fields,
+              new Flexible(
+                child: new Container(
+                  padding: new EdgeInsets.only(bottom: 16.0),
+                  child: new FloatingActionButton(
+                    elevation: 0.0,
+                    child: new Icon(Icons.check),
+                    backgroundColor: color,
+                    onPressed: () {}
+                  )
+                )         
+              )
+            ],
+          ),        
+        ],
+      ) 
     );
   }
 }
