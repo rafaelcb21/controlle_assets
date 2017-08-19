@@ -133,13 +133,15 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     height: _height,
                     child: new CustomPaint(
                       painter: new Sky(_width, _height * _animation.value),
+                      child: new Container(
+                        height: _isRotated ? 0.0 : _height * _animation.value,
+                        width: _isRotated ? 0.0 : _width,
+                      ),
                     ),
                   );
                 }
               ),
             )
-            
-
           ),
           new Positioned(
             bottom: 200.0,
