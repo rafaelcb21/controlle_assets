@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'numero.dart';
 import 'teclado.dart';
 import 'formulario.dart';
+import 'dart:ui' as ui;
 
 class ContaPage extends StatefulWidget {
   final Color color;
@@ -47,7 +48,8 @@ class ContaPageStatus extends State<ContaPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,       
       children: <Widget>[
         new NumeroDisplay(color, numeros),
-        new Teclado(color, numeros),
+        //new Teclado(color, numeros),
+        new MyCustomCard(),
         new Flexible(
           child: new Container(
             padding: new EdgeInsets.only(bottom: 16.0),
@@ -70,4 +72,23 @@ class ContaPageStatus extends State<ContaPage> {
       ],
     ), 
   );
+}
+
+class MyCustomCard extends StatelessWidget {
+
+  Widget build(BuildContext context) {
+    final ui.Size logicalSize = MediaQuery.of(context).size;
+    final double _width = logicalSize.width;
+    final double _height = logicalSize.height;
+
+    return new Container(
+      height: _height - 145.0,
+      width: _width,
+      //decoration: new BoxDecoration(
+      //  color: new Color(color),
+      //  border: new Border.all(color: new Color(0xFF9E9E9E)),
+      //),
+      //child: new FlutterLogo(size: 100.0, colors: color),
+    );
+  }
 }

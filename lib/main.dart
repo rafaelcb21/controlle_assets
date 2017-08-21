@@ -7,6 +7,8 @@ import "home/card_alertas.dart";
 import "conta/conta.dart";
 import 'package:flutter/animation.dart';
 import 'dart:ui' as ui;
+import 'dart:async';
+import 'dart:io';
 
 void main() {
   runApp(new ControlleApp());
@@ -180,7 +182,31 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           child: new InkWell(
                             onTap: (){
                               if(_angle == 45.0){
-                                print("transferência");
+                                _rotate();
+                                //new Future.delayed(const Duration(seconds: 2), () => "2");
+                                //sleep(const Duration(seconds:5));
+                                //Navigator.pop(context);
+                                //Navigator.push(context, new MaterialPageRoute(
+                                //  builder: (BuildContext context) => new ContaPage(new Color(0xFF9E9E9E)),
+                                //));
+
+                                Navigator.of(context).push(new PageRouteBuilder(
+                                  opaque: false,
+                                  pageBuilder: (BuildContext context, _, __) {
+                                    return new ContaPage(new Color(0xFF9E9E9E));
+                                  },
+                                  transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+                                    return new FadeTransition(
+                                      opacity: animation,
+                                      child: child,
+                                      //child: new RotationTransition(
+                                      //  turns: new Tween<double>(begin: 0.5, end: 1.0).animate(animation),
+                                      //  child: child,
+                                      //),
+                                    );
+                                  }
+                                ));
+
                               }
                             },
                             child: new Center(
@@ -236,7 +262,26 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           child: new InkWell(
                             onTap: (){
                               if(_angle == 45.0){
-                                print("receita");
+                                _rotate();
+                                //new Future.delayed(const Duration(seconds: 2), () => "2");
+                                //sleep(const Duration(seconds:5));
+                                //Navigator.pop(context);
+                                //Navigator.push(context, new MaterialPageRoute(
+                                //  builder: (BuildContext context) => new ContaPage(new Color(0xFF00BFA5)),
+                                //));
+
+                                Navigator.of(context).push(new PageRouteBuilder(
+                                  opaque: false,
+                                  pageBuilder: (BuildContext context, _, __) {
+                                    return new ContaPage(new Color(0xFF00BFA5));
+                                  },
+                                  transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+                                    return new FadeTransition(
+                                      opacity: animation,
+                                      child: child,
+                                    );
+                                  }
+                                ));
                               }
                             },
                             child: new Center(
@@ -291,7 +336,25 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           child: new InkWell(
                             onTap: (){
                               if(_angle == 45.0){
-                                print("despesa");
+                                _rotate();
+                                //new Future.delayed(const Duration(seconds: 2), () => "2");
+                                //sleep(const Duration(seconds:5));
+                                //Navigator.pop(context);
+                                //Navigator.push(context, new MaterialPageRoute(
+                                //  builder: (BuildContext context) => new ContaPage(new Color(0xFFE57373)),
+                                //));
+                                Navigator.of(context).push(new PageRouteBuilder(
+                                  opaque: false,
+                                  pageBuilder: (BuildContext context, _, __) {
+                                    return new ContaPage(new Color(0xFFE57373));
+                                  },
+                                  transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+                                    return new FadeTransition(
+                                      opacity: animation,
+                                      child: child,
+                                    );
+                                  }
+                                ));
                               }
                             },
                             child: new Center(
