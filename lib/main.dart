@@ -9,12 +9,16 @@ import 'package:flutter/animation.dart';
 import 'dart:ui' as ui;
 import 'dart:async';
 import 'dart:io';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
+  Intl.defaultLocale = 'pt_BR';
+  initializeDateFormatting('pt_BR');
   runApp(new ControlleApp());
 }
 
-class ControlleApp extends StatelessWidget {
+class ControlleApp extends StatelessWidget {  
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -27,6 +31,8 @@ class ControlleApp extends StatelessWidget {
     );
   }
 }
+
+
 
 class HomePage extends StatefulWidget {
   @override
