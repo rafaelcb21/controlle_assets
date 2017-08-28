@@ -645,6 +645,15 @@ class FormularioState extends State<Formulario> {
               )
             ],
           ),
+
+          new TextField(
+            maxLines: 1,
+            decoration: const InputDecoration(
+              labelText: "Descrição",
+              isDense: true,
+            ),
+            style: Theme.of(context).textTheme.title,
+          )
         ]
       )
     );
