@@ -234,7 +234,7 @@ class Teclado extends StatelessWidget {
       padding: new EdgeInsets.only(right: 15.0, left: 15.0, top: 32.0, bottom: 0.0),
       child: new Column(
         children: <Widget>[
-          new Row(
+          new Row(          
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               new FlatButton(
@@ -242,7 +242,7 @@ class Teclado extends StatelessWidget {
                 child: new Text(
                   '1',
                   style: new TextStyle(
-                    fontSize: 35.0
+                    fontSize: 35.0,
                   ),
                 ),
                 onPressed: () {
@@ -412,6 +412,7 @@ class Formulario extends StatefulWidget {
 class FormularioState extends State<Formulario> {
   DateTime _toDate = new DateTime.now();
   String _valueText = "Outros";
+  String _valueTextCartao = "Cartão";
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
  
   void showDemoDialog<T>({ BuildContext context, Widget child }) {
@@ -428,6 +429,20 @@ class FormularioState extends State<Formulario> {
     });
   }
  
+  void showDialogCartao<T>({ BuildContext context, Widget child }) {
+    showDialog<T>(
+      context: context,
+      child: child,
+    )
+    .then<Null>((T value) { // The value passed to Navigator.pop() or null.
+      if (value != null) {
+        setState(() {
+          _valueTextCartao = value.toString();
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -583,9 +598,55 @@ class FormularioState extends State<Formulario> {
                 ),
               ),
             ],
-          )
-        ],
-      ),
+          ),
+
+          new Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              new Expanded(
+                flex: 4,
+                child: new _InputDropdown(
+                  labelText: 'Conta/Cartão',
+                  valueText: _valueTextCartao,
+                  valueStyle: valueStyle,
+                  onPressed: () {
+                    showDialogCartao<String>(
+                      context: context,
+                      child: new SimpleDialog(
+                        title: const Text('Selecione uma conta'),
+                        children: <Widget>[
+                          new Container(
+                            padding: new EdgeInsets.only(left: 24.0, top: 8.0, bottom: 8.0),
+                            color: new Color(0xFFDFD9D9),
+                            child: new Text('CONTAS'),
+                          ),                          
+                          new DialogItem(
+                            icon: Icons.brightness_1,
+                            color: new Color(0xFF279605),
+                            text: 'Caixa',
+                            onPressed: () { Navigator.pop(context, 'Caixa'); }
+                          ),
+                          new Container(
+                            padding: new EdgeInsets.only(left: 24.0, top: 8.0, bottom: 8.0),
+                            color: new Color(0xFFDFD9D9),
+                            child: new Text('CARTÕES'),
+                          ),
+                          new DialogItem(
+                            icon: Icons.brightness_1,
+                            color: new Color(0xFF005959),
+                            text: 'NuBank',                           
+                            onPressed: () { Navigator.pop(context, 'NuBank'); }
+                          ),
+                        ],
+                      )
+                    );
+                  }
+                )
+              )
+            ],
+          ),
+        ]
+      )
     );
   }
 }
@@ -603,30 +664,24 @@ class DialogItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return new SimpleDialogOption(
       onPressed: onPressed,
-      child: new Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          //new Container(            
-            //child: 
+      child: new Container(
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
             new Container(              
-              //decoration: new BoxDecoration(
-              //  border: new Border.all(color: new Color(0xFF9E9E9E)),
-              //),
               child: new Container(
                 margin: size == 16.0 ? new EdgeInsets.only(left: 7.0) : null,
                 child: new Icon(icon, size: size, color: color),
-              )
-                
-            ),         
+              )                
+            ),        
             new Padding(
               padding: size == 16.0 ? const EdgeInsets.only(left: 17.0) : const EdgeInsets.only(left: 16.0),
               child: new Text(text),
             ),
-          //)
-          
-        ],
-      ),
+          ],
+        ),
+      )
     );
   }
 }
@@ -694,8 +749,9 @@ class _InputDropdown extends StatelessWidget {
     return new InkWell(
       onTap: onPressed,
       child: new InputDecorator(
-       decoration: new InputDecoration(
+        decoration: new InputDecoration(
           labelText: labelText,
+          isDense: true,
         ),
         baseStyle: valueStyle,
         child: new Row(
