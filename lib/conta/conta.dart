@@ -3,7 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 import 'dart:ui' as ui;
- 
+import 'package:meta/meta.dart';
+import 'package:flutter/rendering.dart';
+
 class ContaPage extends StatefulWidget {
   final Color color;
   ContaPage(this.color);
@@ -16,7 +18,9 @@ class ContaPageStatus extends State<ContaPage> with TickerProviderStateMixin{
   ValueNotifier<List<int>> numeros = new ValueNotifier<List<int>>(<int>[]);
  
   AnimationController _controller;
+  //AnimationController _controller2;
   Animation _animation;
+  //Animation _animation2;
   Animation<double> _frontScale;
   Animation<double> _backScale;
  
@@ -54,6 +58,11 @@ class ContaPageStatus extends State<ContaPage> with TickerProviderStateMixin{
       parent: _controller,
       curve: new Interval(0.0, 1.0, curve: Curves.linear),
     );
+
+    //_animation2 = new CurvedAnimation(
+    //  parent: _controller2,
+    //  curve: new Interval(0.0, 1.0, curve: Curves.linear),
+    //);
  
     _frontScale = new Tween(
       begin: 1.0,
@@ -68,6 +77,7 @@ class ContaPageStatus extends State<ContaPage> with TickerProviderStateMixin{
     );
  
     _controller.forward();
+
     super.initState();
   }
  
@@ -80,7 +90,7 @@ class ContaPageStatus extends State<ContaPage> with TickerProviderStateMixin{
   void back() {
     setState((){
         _controller.forward();
- 
+
     });   
   }
  
@@ -92,62 +102,107 @@ class ContaPageStatus extends State<ContaPage> with TickerProviderStateMixin{
     return new Scaffold(
       body: new Stack(
         children: <Widget>[
-          new Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          new SingleChildScrollView(
+            //crossAxisAlignment: CrossAxisAlignment.center,
             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              new GestureDetector(
-                onTap: back,
-                child: new NumberDisplay(color, numeros),
-              ),         
- 
-              new Stack(
-                children: <Widget>[
-                  new AnimatedBuilder(
-                    animation: _backScale,
-                    child: new Teclado(color, numeros),
-                    builder: (BuildContext context, Widget child) {
-                      final Matrix4 transform = new Matrix4.identity()
-                        ..scale(1.0, _backScale.value, 1.0);
-                      return new Transform(
-                        transform: transform,
-                        alignment: FractionalOffset.center,
-                        child: child,
-                      );
-                    },
-                  ),
-                  new AnimatedBuilder(
-                    animation: _frontScale,
-                    child: new Formulario(),
-                    builder: (BuildContext context, Widget child) {
-                      final Matrix4 transform = new Matrix4.identity()
-                        ..scale(1.0, _frontScale.value, 1.0);
-                      return new Transform(
-                        transform: transform,
-                        alignment: FractionalOffset.center,
-                        child: child,
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ],
+            child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                new GestureDetector(
+                  onTap: back,
+                  child: new NumberDisplay(color, numeros),
+                ),
+                new Stack(
+                  children: <Widget>[
+                    new AnimatedBuilder(
+                      animation: _backScale,
+                      child: new Teclado(color, numeros),
+                      builder: (BuildContext context, Widget child) {
+                        final Matrix4 transform = new Matrix4.identity()
+                          ..scale(1.0, _backScale.value, 1.0);
+                        return new Transform(
+                          transform: transform,
+                          alignment: FractionalOffset.center,
+                          child: child,
+                        );
+                      },
+                    ),
+                    new AnimatedBuilder(
+                      animation: _frontScale,
+                      child: new Formulario(),
+                      builder: (BuildContext context, Widget child) {
+                        final Matrix4 transform = new Matrix4.identity()
+                          ..scale(1.0, _frontScale.value, 1.0);
+                        return new Transform(
+                          transform: transform,
+                          alignment: FractionalOffset.center,
+                          child: child,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
  
+          //new Stack(
+          //  children: <Widget>[
+          //    new Positioned(
+          //      bottom: 16.0,
+          //      left: (_width / 2) - 28,
+          //      child: new ScaleTransition(
+          //        alignment: FractionalOffset.center,
+          //        scale: new Tween(begin: 1.0, end: 0.0).animate(_animation),
+          //        child: new FloatingActionButton(
+          //          backgroundColor: color,
+          //          child: new Icon(Icons.check),
+          //          onPressed: (){
+          //            //action();
+          //          }
+          //        ),
+          //      ),
+          //    ),
+          //    new Positioned(
+          //      bottom: 16.0,
+          //      left: (_width / 2) - 28,
+          //      child: new ScaleTransition(
+          //        alignment: FractionalOffset.center,
+          //        scale: _animation,
+          //        child: new FloatingActionButton(
+          //          backgroundColor: color,
+          //          child: new Icon(Icons.check),
+          //          onPressed: (){
+          //            action();
+          //          }
+          //        ),
+          //      ),
+          //    ),
+          //  ],
+          //),
+          
           new Positioned(
             bottom: 16.0,
-            left: (_width / 2) - 28,
+            left: (_width / 2) - 44,
             child: new ScaleTransition(
               scale: _animation,
-              child: new FloatingActionButton(
-                backgroundColor: color,
-                child: new Icon(Icons.check),
+              child: new RaisedButton(
+                color: color,
+                child: const Text(
+                  'OK',
+                  style: const TextStyle(
+                    color: const Color(0xFFFFFFFF),
+                    fontSize: 24.0
+                  )
+                ),//new Icon(Icons.check, color: new Color(0xFFFFFFFF),),
                 onPressed: (){
                   action();
                 }
               ),
             ),
           )
+
+
         ]
       ),
     );
@@ -398,6 +453,21 @@ class Teclado extends StatelessWidget {
               ),
             ],
           ),
+          //new Container(height: 30.0),
+
+          //new Row(
+          //  mainAxisAlignment: MainAxisAlignment.center,
+          //  children: <Widget>[
+          //    new FloatingActionButton(
+          //      backgroundColor: color,
+          //      child: new Icon(Icons.check),
+          //      onPressed: (){
+          //        action();
+          //      }
+          //    ),
+          //  ],
+          //),
+          
         ],
       ),
     );
@@ -414,7 +484,8 @@ class FormularioState extends State<Formulario> {
   String _valueText = "Outros";
   String _valueTextCartao = "Cartão";
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
- 
+  FocusNode _focusNode = new FocusNode();
+
   void showDemoDialog<T>({ BuildContext context, Widget child }) {
     showDialog<T>(
       context: context,
@@ -645,15 +716,42 @@ class FormularioState extends State<Formulario> {
               )
             ],
           ),
-
-          new TextField(
-            maxLines: 1,
-            decoration: const InputDecoration(
-              labelText: "Descrição",
-              isDense: true,
+          new EnsureVisibleWhenFocused(
+            focusNode: _focusNode,            
+            child: new TextField(
+              maxLines: 1,
+              focusNode: _focusNode,
+              style: Theme.of(context).textTheme.title,
+              decoration: new InputDecoration(
+                labelText: "Descrição",
+                isDense: true,
+              ),
             ),
-            style: Theme.of(context).textTheme.title,
+          ),
+
+          new Container(
+            padding: new EdgeInsets.only(top: 30.0, bottom: 16.0),
+            child: new RaisedButton(
+              color: new Color(0xFFE57373),
+              child: const Text(
+                'OK',
+                style: const TextStyle(
+                  color: const Color(0xFFFFFFFF),
+                  fontSize: 24.0
+                ),  
+              ),//new Icon(Icons.check, color: new Color(0xFFFFFFFF),),
+              onPressed: (){}
+            ),
           )
+          //new TextField(
+          //  maxLines: 1,
+          //  decoration: const InputDecoration(
+          //    labelText: "Descrição",
+          //    isDense: true,
+          //  ),
+          //  style: Theme.of(context).textTheme.title,
+          //)
+              
         ]
       )
     );
@@ -773,4 +871,66 @@ class _InputDropdown extends StatelessWidget {
       ),
     );
   }
+}
+
+class EnsureVisibleWhenFocused extends StatefulWidget {
+  const EnsureVisibleWhenFocused({
+    Key key,
+    @required this.child,
+    @required this.focusNode,
+    this.curve: Curves.ease,
+    this.duration: const Duration(milliseconds: 100),
+  }) : super(key: key);
+
+  final FocusNode focusNode;
+  final Widget child;
+  final Curve curve;
+  final Duration duration;
+
+  EnsureVisibleWhenFocusedState createState() => new EnsureVisibleWhenFocusedState();
+}
+
+class EnsureVisibleWhenFocusedState extends State<EnsureVisibleWhenFocused> {
+  @override
+  void initState() {
+    super.initState();
+    widget.focusNode.addListener(_ensureVisible);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.focusNode.removeListener(_ensureVisible);
+  }
+
+  Future<Null> _ensureVisible() async {
+    await new Future.delayed(const Duration(milliseconds: 600));
+
+    if (!widget.focusNode.hasFocus)
+      return;
+
+    final RenderObject object = context.findRenderObject();
+    final RenderAbstractViewport viewport = RenderAbstractViewport.of(object);
+    assert(viewport != null);
+
+    ScrollableState scrollableState = Scrollable.of(context);
+    assert(scrollableState != null);
+
+    ScrollPosition position = scrollableState.position;
+    double alignment;
+    if (position.pixels > viewport.getOffsetToReveal(object, 0.0)) {
+      alignment = 0.0;
+    } else if (position.pixels < viewport.getOffsetToReveal(object, 1.0)) {
+      alignment = 1.0;
+    } else {
+      return;
+    }
+    position.ensureVisible(
+      object,
+      alignment: alignment,
+      duration: widget.duration,
+      curve: widget.curve,
+    );
+  }
+  Widget build(BuildContext context) => widget.child;
 }
