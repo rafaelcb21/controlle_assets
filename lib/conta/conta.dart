@@ -192,7 +192,7 @@ class ContaPageStatus extends State<ContaPage> with TickerProviderStateMixin{
                   'OK',
                   style: const TextStyle(
                     color: const Color(0xFFFFFFFF),
-                    fontSize: 24.0
+                    fontSize: 28.0
                   )
                 ),//new Icon(Icons.check, color: new Color(0xFFFFFFFF),),
                 onPressed: (){
