@@ -5,6 +5,8 @@ import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:meta/meta.dart';
 import 'package:flutter/rendering.dart';
+import './textpicker.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class ContaPage extends StatefulWidget {
   final Color color;
@@ -129,7 +131,7 @@ class ContaPageStatus extends State<ContaPage> with TickerProviderStateMixin{
                     ),
                     new AnimatedBuilder(
                       animation: _frontScale,
-                      child: new Formulario(),
+                      child: new Formulario(this.color, this.numeros),
                       builder: (BuildContext context, Widget child) {
                         final Matrix4 transform = new Matrix4.identity()
                           ..scale(1.0, _frontScale.value, 1.0);
@@ -192,7 +194,7 @@ class ContaPageStatus extends State<ContaPage> with TickerProviderStateMixin{
                   'OK',
                   style: const TextStyle(
                     color: const Color(0xFFFFFFFF),
-                    fontSize: 28.0
+                    fontSize: 24.0
                   )
                 ),//new Icon(Icons.check, color: new Color(0xFFFFFFFF),),
                 onPressed: (){
@@ -473,18 +475,200 @@ class Teclado extends StatelessWidget {
     );
   }
 }
- 
+
+//enum RadioGroup {
+//  fixo,
+//  parcelado
+//}
+
 class Formulario extends StatefulWidget {
+  final Color color;
+  final ValueNotifier<List<int>> numeros;
+
+  Formulario(this.color, this.numeros);
   @override
-  FormularioState createState() => new FormularioState();
+  FormularioState createState() => new FormularioState(this.color, this.numeros);
 }
- 
+
+typedef void MyFormCallback(String result);
+
+class MyForm extends StatefulWidget {
+  final MyFormCallback onSubmit;
+
+  MyForm({this.onSubmit});
+
+  @override
+  _MyFormState createState() => new _MyFormState();
+}
+
+class _MyFormState extends State<MyForm> {
+  String value = "Fixa";
+  int _currentValueFixo = 3;
+  int _currentValueParcelado = 3;
+  int _currentValue = 2;
+
+  List fixoList = ['Diária', 'Semanal', 'Quinzenal', 'Mensal', 
+                'Bimestral', 'Trimestral', 'Semestral', 'Anual'];
+
+  List parceladoList = ['Dias', 'Semanas', 'Quinzenas', 'Meses', 
+                          'Bimestres', 'Trimestres', 'Semestres', 'Anos'];
+  
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return new SimpleDialog(
+      title: new Text("Repetir"),
+      children: <Widget>[
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Radio(
+              groupValue: value,
+              onChanged: (value) => setState(() => this.value = value),
+              value: "Fixa",
+            ),
+            const Text("Fixa"),
+            new Radio(
+              groupValue: value,
+              onChanged: (value) => setState(() => this.value = value),
+              value: "Parcelada",
+            ),
+            const Text("Parcelada"),
+          ],
+        ),
+        this.value == "Fixa"
+        ?
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new TextPicker(
+                initialValue: _currentValueFixo,
+                listName: this.fixoList,
+                onChanged: (newValue) =>
+                  setState(() => _currentValueFixo = newValue)
+              ),
+            ],
+          )
+        :
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new NumberPicker.integer(
+                initialValue: _currentValue,
+                minValue: 2,
+                maxValue: 360,
+                onChanged: (newValue) =>
+                    setState(() => _currentValue = newValue)),
+
+              new TextPicker(
+                initialValue: _currentValueParcelado,
+                listName: this.parceladoList,
+                onChanged: (newValue) =>
+                  setState(() => _currentValueParcelado = newValue)
+              ),
+            ],
+          ),
+
+        new FlatButton(
+          onPressed: () {
+            Navigator.pop(context);
+            if(value == 'Fixa') {
+              widget.onSubmit(value + ';' + this.fixoList[_currentValueFixo]);
+            } else {
+              widget.onSubmit(value + ';' +  _currentValue.toString() + ';' + 
+                parceladoList[_currentValueParcelado]);
+            }
+            
+          },
+          child: new Container(
+            margin: new EdgeInsets.only(right: 10.0),
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                new Text(
+                  "OK",
+                  style: new TextStyle(
+                    fontSize: 16.0
+                  ),
+                ),
+              ],
+            ),
+          )
+        )
+      ],
+    );
+  }
+}
+
 class FormularioState extends State<Formulario> {
+  final Color color;
+  final ValueNotifier<List<int>> numeros;
+
+  FormularioState(this.color, this.numeros);
+  //RadioGroup itemType = RadioGroup.fixo;
   DateTime _toDate = new DateTime.now();
   String _valueText = "Outros";
-  String _valueTextCartao = "Cartão";
+  String _valueTextCartao = "Caixa";  
+  String _valueTextTag = '';
+  //color == const Color(0xffe57373) ? 'Despesa Fixa' : 'Receita Fixa';
+  
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   FocusNode _focusNode = new FocusNode();
+  final TextEditingController _controller = new TextEditingController();
+
+  Map formSubmit = {'tipo':'', 'valor':'' ,'data':new DateTime.now(),
+    'categoria':'Outros', 'tag':'', 'conta':'Caixa', 'descricao':'', 'repetir':''};
+
+  void initState(){
+    color == const Color(0xffe57373) ?
+      _valueTextTag = 'Despesa Variável' :
+      _valueTextTag = 'Receita Variável';
+
+  }
+  String tagDdespesaOUreceita(color) {
+    if(color == const Color(0xffe57373)){      
+      return 'Despesa ';
+    } else {
+      return 'Receita ';
+    }
+  }
+
+  String despesaOUreceita(color, String frase) {
+    var fraseLowerCaseList = frase.toLowerCase().split(';');
+    if(fraseLowerCaseList.length == 3) {
+      fraseLowerCaseList.insert(1, 'em');
+    }
+    if(color == const Color(0xffe57373)){      
+      return 'Despesa ' + fraseLowerCaseList.join(' ');
+    } else {
+      return 'Receita ' + fraseLowerCaseList.join(' ');
+    }
+  }
+
+  String numeroUSA(List<int> numerosLista){
+    if(numerosLista.length == 0) {
+      return '0.00';
+    }
+    if(numerosLista.length == 1) {
+      return '0.0' + numerosLista[0].toString();
+    }
+    if(numerosLista.length == 2) {
+      return '0.' + numerosLista[0].toString() + numerosLista[1].toString();
+    }
+    if(numerosLista.length == 3 && numerosLista[0] == 0){
+      return '0.' + numerosLista[1].toString() + numerosLista[2].toString();
+    }
+    if(numerosLista.length >= 3) {
+      List<int> inteiroLista = numerosLista.getRange(0, numerosLista.length -2);
+      List<int> decimalLista = numerosLista.getRange(numerosLista.length -2, numerosLista.length);
+      String inteiroListaString = inteiroLista.map((i) => i.toString()).join('');
+      String decimalListaString = decimalLista.map((i) => i.toString()).join('');
+
+      var valor = inteiroListaString + '.' + decimalListaString;
+      return valor;
+    }
+  }
 
   void showDemoDialog<T>({ BuildContext context, Widget child }) {
     showDialog<T>(
@@ -514,6 +698,38 @@ class FormularioState extends State<Formulario> {
     });
   }
 
+  void showDialogTag<T>({ BuildContext context, Widget child }) {
+    showDialog<T>(
+      context: context,
+      child: child,
+    )
+    .then<Null>((T value) { // The value passed to Navigator.pop() or null.
+      if (value != null) {
+        setState(() {
+          _valueTextTag = value.toString();
+        });
+      }
+    });
+  }
+
+  //void showDialogRepeat<T>({ BuildContext context, Widget child }) {
+  //  showDialog<T>(
+  //    context: context,
+  //    child: new MyForm(),
+  //  );
+  //}
+
+  //void changeItemType(RadioGroup type) {
+  //  setState(() {
+  //    itemType = type;
+  //  });
+  //}
+
+  void onSubmit(String result) {
+    this.formSubmit['repetir'] = result;
+    //Navigator.pop(context, 'result');
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -523,12 +739,55 @@ class FormularioState extends State<Formulario> {
       padding: new EdgeInsets.only(right: 24.0, left: 24.0, top: 0.0, bottom: 0.0),
       child: new Column(
         children: <Widget>[
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              new InkWell(
+                onTap: (){
+                  showDialog(
+                    context: context,
+                    child: new MyForm(onSubmit: onSubmit));
+                },
+                child: new Container(
+                  margin: new EdgeInsets.only(top: 16.0, bottom: 8.0),
+                  child: new Text(
+                    this.formSubmit['repetir'] == ''
+                    ?
+                      'Repetir'
+                    : despesaOUreceita(this.color, this.formSubmit['repetir']),
+                    style: new TextStyle(
+                      color: this.color
+                    ),
+                  ),
+                ),
+              ),
+
+              this.formSubmit['repetir'] != '' ?
+                new InkWell(
+                  onTap: (){
+                    setState(() {
+                      this.formSubmit['repetir'] = '';
+                    });
+                  },
+                  child: new Container(
+                    margin: new EdgeInsets.only(top: 16.0, bottom: 8.0, left: 8.0),
+                    child: new Icon(
+                      Icons.cancel,
+                      size: 18.0,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ) : new Container()
+
+            ],
+          ),
           new _DateTimePicker(
             labelText: 'Data',
             selectedDate: _toDate,
             selectDate: (DateTime date) {
               setState(() {
                 _toDate = date;
+                this.formSubmit['data'] = date;
              });
             },
           ),
@@ -552,116 +811,220 @@ class FormularioState extends State<Formulario> {
                             icon: Icons.brightness_1,
                             color: new Color(0xFFFFA500),
                             text: 'Alimentação',
-                            onPressed: () { Navigator.pop(context, 'Alimentação'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Alimentação';
+                              Navigator.pop(context, 'Alimentação');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFF279605),
                             text: 'Cartão',
-                            onPressed: () { Navigator.pop(context, 'Cartão'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Cartão';
+                              Navigator.pop(context, 'Cartão');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFF005959),
                             text: 'Educação',                           
-                            onPressed: () { Navigator.pop(context, 'Educação'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Educação';
+                              Navigator.pop(context, 'Educação');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.subdirectory_arrow_right,
                             size: 16.0,
                             color: theme.disabledColor,
                             text: 'Cultura',
-                            onPressed: () { Navigator.pop(context, 'Cultura'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Cultura';
+                              Navigator.pop(context, 'Cultura');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFFFF99FF),
                             text: 'Investimento',
-                            onPressed: () { Navigator.pop(context, 'Investimento'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Investimento';
+                              Navigator.pop(context, 'Investimento');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.subdirectory_arrow_right,
                             size: 16.0,
                             color: theme.disabledColor,
                             text: 'Poupança',
-                            onPressed: () { Navigator.pop(context, 'Poupança'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Poupança';
+                              Navigator.pop(context, 'Poupança');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFF00ABFF),
                             text: 'Lazer',
-                            onPressed: () { Navigator.pop(context, 'Lazer'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Lazer';
+                              Navigator.pop(context, 'Lazer');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFFB6A8A5),
                             text: 'Moradia',
-                            onPressed: () { Navigator.pop(context, 'Moradia'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Moradia';
+                              Navigator.pop(context, 'Moradia');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.subdirectory_arrow_right,
                             size: 16.0,
                             color: theme.disabledColor,
                             text: 'Eletrônico',                           
-                            onPressed: () { Navigator.pop(context, 'Eletrônico'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Eletrônico';
+                              Navigator.pop(context, 'Eletrônico');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.subdirectory_arrow_right,
                             size: 16.0,
                             color: theme.disabledColor,
                             text: 'Hotel',
-                            onPressed: () { Navigator.pop(context, 'Hotel'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Hotel';
+                              Navigator.pop(context, 'Hotel');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFF000000),
                             text: 'Outros',
-                            onPressed: () { Navigator.pop(context, 'Outros'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Outros';
+                              Navigator.pop(context, 'Outros');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFFA3D97D),
                             text: 'Salário',                           
-                            onPressed: () { Navigator.pop(context, 'Salário'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Salário';
+                              Navigator.pop(context, 'Salário');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFFF5423C),
                             text: 'Saúde',
-                            onPressed: () { Navigator.pop(context, 'Saúde'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Saúde';
+                              Navigator.pop(context, 'Saúde');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.subdirectory_arrow_right,
                             size: 16.0,
                             color: theme.disabledColor,
                             text: 'Cosméticos',
-                            onPressed: () { Navigator.pop(context, 'Cosméticos'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Cosméticos';
+                              Navigator.pop(context, 'Cosméticos');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.subdirectory_arrow_right,
                             size: 16.0,
                             color: theme.disabledColor,
                             text: 'Drogaria',
-                            onPressed: () { Navigator.pop(context, 'Drogaria'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Drogaria';
+                              Navigator.pop(context, 'Drogaria');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFF92A8D1),
                             text: 'Telefonia',                           
-                            onPressed: () { Navigator.pop(context, 'Telefonia'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Telefonia';
+                              Navigator.pop(context, 'Telefonia');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFFF6F902),
                             text: 'Transporte',
-                            onPressed: () { Navigator.pop(context, 'Transporte'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Transporte';
+                              Navigator.pop(context, 'Transporte');
+                            }
                           ),
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFF3DDF0B),
                             text: 'Vestuário',                            
-                            onPressed: () { Navigator.pop(context, 'Vestuário'); }
+                            onPressed: () {
+                              this.formSubmit['categoria'] = 'Vestuário';
+                              Navigator.pop(context, 'Vestuário');
+                            }
                           )
+                        ]
+                      )
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+
+          new Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              new Expanded(
+                flex: 4,
+                child: new _InputDropdown(
+                  labelText: 'Tag',
+                  valueText: _valueTextTag,
+                  valueStyle: valueStyle,
+                  onPressed: () {
+                    showDialogTag<String>(
+                      context: context,
+                      child: new SimpleDialog(
+                        title: const Text('Tags'),
+                        children: <Widget>[
+                          new DialogItem(
+                            icon: Icons.brightness_1,
+                            color: new Color(0xFFFFA500),
+                            text: this.color == const Color(0xffe57373) ? 'Despesa Fixa' : 'Receita Fixa',
+                            onPressed: () {
+                              var depRec;
+                              this.color == const Color(0xffe57373) ?
+                                depRec = 'Despesa Fixa' : depRec = 'Receita Fixa';
+
+                              this.formSubmit['tag'] = depRec;
+                              Navigator.pop(context, depRec);
+                            }
+                          ),
+                          new DialogItem(
+                            icon: Icons.brightness_1,
+                            color: new Color(0xFF279605),
+                            text: this.color == const Color(0xffe57373) ? 'Despesa Variável' : 'Receita Variável',
+                            onPressed: () {
+                              var depRec;
+                              this.color == const Color(0xffe57373) ?
+                                depRec = 'Despesa Variável' : depRec = 'Receita Variável';
+
+                              this.formSubmit['tag'] = depRec;
+                              Navigator.pop(context, depRec);
+                            }
+                          ),
                         ]
                       )
                     );
@@ -695,7 +1058,10 @@ class FormularioState extends State<Formulario> {
                             icon: Icons.brightness_1,
                             color: new Color(0xFF279605),
                             text: 'Caixa',
-                            onPressed: () { Navigator.pop(context, 'Caixa'); }
+                            onPressed: () {
+                              this.formSubmit['conta'] = 'Caixa';
+                              Navigator.pop(context, 'Caixa');
+                            }
                           ),
                           new Container(
                             padding: new EdgeInsets.only(left: 24.0, top: 8.0, bottom: 8.0),
@@ -706,7 +1072,10 @@ class FormularioState extends State<Formulario> {
                             icon: Icons.brightness_1,
                             color: new Color(0xFF005959),
                             text: 'NuBank',                           
-                            onPressed: () { Navigator.pop(context, 'NuBank'); }
+                            onPressed: () {
+                              this.formSubmit['conta'] = 'NuBank';
+                              Navigator.pop(context, 'NuBank');
+                            }
                           ),
                         ],
                       )
@@ -719,6 +1088,7 @@ class FormularioState extends State<Formulario> {
           new EnsureVisibleWhenFocused(
             focusNode: _focusNode,            
             child: new TextField(
+              controller: _controller,
               maxLines: 1,
               focusNode: _focusNode,
               style: Theme.of(context).textTheme.title,
@@ -732,7 +1102,7 @@ class FormularioState extends State<Formulario> {
           new Container(
             padding: new EdgeInsets.only(top: 30.0, bottom: 16.0),
             child: new RaisedButton(
-              color: new Color(0xFFE57373),
+              color: this.color,
               child: const Text(
                 'OK',
                 style: const TextStyle(
@@ -740,7 +1110,19 @@ class FormularioState extends State<Formulario> {
                   fontSize: 24.0
                 ),  
               ),//new Icon(Icons.check, color: new Color(0xFFFFFFFF),),
-              onPressed: (){}
+              onPressed: (){
+                this.formSubmit['descricao'] = _controller.text;
+                this.color == const Color(0xffe57373) ? 
+                  this.formSubmit['tipo'] = 'Despesa' : 
+                  this.formSubmit['tipo'] = 'Receita' ;
+                if(this.formSubmit['tag'] == '') {
+                  this.formSubmit['tag'] = this.formSubmit['tipo'] + ' Variável';
+                }
+                var valor = this.numeroUSA(this.numeros.value);
+                this.formSubmit['valor'] = valor;
+                print(this.formSubmit);
+                Navigator.pop(context);
+              }
             ),
           )
           //new TextField(
