@@ -609,23 +609,27 @@ class FormularioState extends State<Formulario> {
   //RadioGroup itemType = RadioGroup.fixo;
   DateTime _toDate = new DateTime.now();
   String _valueText = "Outros";
-  String _valueTextCartao = "Caixa";  
+  String _valueTextCartao = "Caixa";
+  String _valueTextContaDestino = "Caixa";
   String _valueTextTag = '';
-  //color == const Color(0xffe57373) ? 'Despesa Fixa' : 'Receita Fixa';
   
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   FocusNode _focusNode = new FocusNode();
   final TextEditingController _controller = new TextEditingController();
 
   Map formSubmit = {'tipo':'', 'valor':'' ,'data':new DateTime.now(),
-    'categoria':'Outros', 'tag':'', 'conta':'Caixa', 'descricao':'', 'repetir':''};
+    'categoria':'Outros', 'tag':'', 'conta':'Caixa', 'contaDestino':'','descricao':'', 'repetir':''};
 
   void initState(){
-    color == const Color(0xffe57373) ?
-      _valueTextTag = 'Despesa Variável' :
+    if(color == const Color(0xffe57373)){      
+       _valueTextTag = 'Despesa Variável';
+    } else if(this.color == const Color(0xff9e9e9e)) {
+      _valueTextTag = '';
+    } else {
       _valueTextTag = 'Receita Variável';
-
+    }
   }
+
   String tagDdespesaOUreceita(color) {
     if(color == const Color(0xffe57373)){      
       return 'Despesa ';
@@ -641,6 +645,8 @@ class FormularioState extends State<Formulario> {
     }
     if(color == const Color(0xffe57373)){      
       return 'Despesa ' + fraseLowerCaseList.join(' ');
+    } else if(this.color == const Color(0xff9e9e9e)) {
+      return 'Transferência ' + fraseLowerCaseList.join(' ');
     } else {
       return 'Receita ' + fraseLowerCaseList.join(' ');
     }
@@ -693,6 +699,20 @@ class FormularioState extends State<Formulario> {
       if (value != null) {
         setState(() {
           _valueTextCartao = value.toString();
+        });
+      }
+    });
+  }
+
+  void showDialogContaDestino<T>({ BuildContext context, Widget child }) {
+    showDialog<T>(
+      context: context,
+      child: child,
+    )
+    .then<Null>((T value) { // The value passed to Navigator.pop() or null.
+      if (value != null) {
+        setState(() {
+          _valueTextContaDestino = value.toString();
         });
       }
     });
@@ -984,6 +1004,7 @@ class FormularioState extends State<Formulario> {
             ],
           ),
 
+          this.color == const Color(0xff9e9e9e) ? new Container() :
           new Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
@@ -1040,7 +1061,7 @@ class FormularioState extends State<Formulario> {
               new Expanded(
                 flex: 4,
                 child: new _InputDropdown(
-                  labelText: 'Conta/Cartão',
+                  labelText: this.color == const Color(0xff9e9e9e) ? 'Conta origem' : 'Conta/Cartão',
                   valueText: _valueTextCartao,
                   valueStyle: valueStyle,
                   onPressed: () {
@@ -1049,6 +1070,7 @@ class FormularioState extends State<Formulario> {
                       child: new SimpleDialog(
                         title: const Text('Selecione uma conta'),
                         children: <Widget>[
+                          this.color == const Color(0xff9e9e9e) ? new Container() : 
                           new Container(
                             padding: new EdgeInsets.only(left: 24.0, top: 8.0, bottom: 8.0),
                             color: new Color(0xFFDFD9D9),
@@ -1063,11 +1085,24 @@ class FormularioState extends State<Formulario> {
                               Navigator.pop(context, 'Caixa');
                             }
                           ),
+                          new DialogItem(
+                            icon: Icons.brightness_1,
+                            color: new Color(0xFF244086),
+                            text: 'Itaú',
+                            onPressed: () {
+                              this.formSubmit['conta'] = 'Itaú';
+                              Navigator.pop(context, 'Itaú');
+                            }
+                          ),
+
+                          this.color == const Color(0xff9e9e9e) ? new Container() : 
                           new Container(
                             padding: new EdgeInsets.only(left: 24.0, top: 8.0, bottom: 8.0),
                             color: new Color(0xFFDFD9D9),
                             child: new Text('CARTÕES'),
                           ),
+
+                          this.color == const Color(0xff9e9e9e) ? new Container() : 
                           new DialogItem(
                             icon: Icons.brightness_1,
                             color: new Color(0xFF005959),
@@ -1085,6 +1120,50 @@ class FormularioState extends State<Formulario> {
               )
             ],
           ),
+
+          this.color != const Color(0xff9e9e9e) ? new Container() :
+          new Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              new Expanded(
+                flex: 4,
+                child: new _InputDropdown(
+                  labelText: 'Conta destino',
+                  valueText: _valueTextContaDestino,
+                  valueStyle: valueStyle,
+                  onPressed: () {
+                    showDialogContaDestino<String>(
+                      context: context,
+                      child: new SimpleDialog(
+                        title: const Text('Selecione uma conta'),
+                        children: <Widget>[                          
+                          new DialogItem(
+                            icon: Icons.brightness_1,
+                            color: new Color(0xFF279605),
+                            text: 'Caixa',
+                            onPressed: () {
+                              this.formSubmit['contaDestino'] = 'Caixa';
+                              Navigator.pop(context, 'Caixa');
+                            }
+                          ),
+                          new DialogItem(
+                            icon: Icons.brightness_1,
+                            color: new Color(0xFF244086),
+                            text: 'Itaú',
+                            onPressed: () {
+                              this.formSubmit['contaDestino'] = 'Itaú';
+                              Navigator.pop(context, 'Itaú');
+                            }
+                          ),
+                        ],
+                      )
+                    );
+                  }
+                )
+              )
+            ],
+          ),
+
           new EnsureVisibleWhenFocused(
             focusNode: _focusNode,            
             child: new TextField(
@@ -1112,10 +1191,15 @@ class FormularioState extends State<Formulario> {
               ),//new Icon(Icons.check, color: new Color(0xFFFFFFFF),),
               onPressed: (){
                 this.formSubmit['descricao'] = _controller.text;
-                this.color == const Color(0xffe57373) ? 
-                  this.formSubmit['tipo'] = 'Despesa' : 
-                  this.formSubmit['tipo'] = 'Receita' ;
-                if(this.formSubmit['tag'] == '') {
+                if(this.color == const Color(0xffe57373)) {
+                  this.formSubmit['tipo'] = 'Despesa';
+                } else if(this.color == const Color(0xff9e9e9e)) {
+                  this.formSubmit['tipo'] = 'Transferência';
+                } else {
+                  this.formSubmit['tipo'] = 'Receita';
+                }
+                
+                if(this.formSubmit['tag'] == '' && this.color != const Color(0xff9e9e9e)) {
                   this.formSubmit['tag'] = this.formSubmit['tipo'] + ' Variável';
                 }
                 var valor = this.numeroUSA(this.numeros.value);
