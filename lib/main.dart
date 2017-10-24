@@ -11,6 +11,11 @@ import 'dart:async';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+//final googleSignIn = new GoogleSignIn();
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 void main() {
   Intl.defaultLocale = 'pt_BR';

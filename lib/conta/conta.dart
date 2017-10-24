@@ -617,11 +617,17 @@ class FormularioState extends State<Formulario> {
   FocusNode _focusNode = new FocusNode();
   final TextEditingController _controller = new TextEditingController();
 
-  Map formSubmit = {'tipo':'', 'valor':'' ,'data':new DateTime.now(),
+  Map formSubmit = {'tipo':'', 'valor':'' ,'data':new DateTime.now().toString(),
     'categoria':'Outros', 'tag':'', 'conta':'Caixa', 'contaDestino':'','descricao':'', 'repetir':''};
-
+    //falta colocar se eh cartao ou nao, e se for qual sera a fatura que sera lancada
+    //se for cartao e tiver repeticao lancar o valor nas fatura corretas se for
+    //  fixa lancar somente do mes atual ou lancar as parceladas tb somente no mes atual
+    //conta destino nao pode ser igual a conta origem
+    //se tiver repeticao e for fixa lancara somente do mes atual,
+    //  e qdo for para o mes seguinte ou no relatorio lancara as repeticoes que nao
+    //  foram lancadas
   void initState(){
-    if(color == const Color(0xffe57373)){      
+    if(color == const Color(0xffe57373)){
        _valueTextTag = 'Despesa Variável';
     } else if(this.color == const Color(0xff9e9e9e)) {
       _valueTextTag = '';
@@ -631,7 +637,7 @@ class FormularioState extends State<Formulario> {
   }
 
   String tagDdespesaOUreceita(color) {
-    if(color == const Color(0xffe57373)){      
+    if(color == const Color(0xffe57373)){
       return 'Despesa ';
     } else {
       return 'Receita ';
@@ -643,7 +649,7 @@ class FormularioState extends State<Formulario> {
     if(fraseLowerCaseList.length == 3) {
       fraseLowerCaseList.insert(1, 'em');
     }
-    if(color == const Color(0xffe57373)){      
+    if(color == const Color(0xffe57373)){
       return 'Despesa ' + fraseLowerCaseList.join(' ');
     } else if(this.color == const Color(0xff9e9e9e)) {
       return 'Transferência ' + fraseLowerCaseList.join(' ');
@@ -807,7 +813,7 @@ class FormularioState extends State<Formulario> {
             selectDate: (DateTime date) {
               setState(() {
                 _toDate = date;
-                this.formSubmit['data'] = date;
+                this.formSubmit['data'] = date.toString();
              });
             },
           ),

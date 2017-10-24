@@ -10,6 +10,8 @@ dependencies:
   firebase_auth: 0.3.1
   firebase_database: 0.1.2
   firebase_storage: 0.0.7
+  sqflite: any
+  path_provider: any
 
 dev_dependencies:
   flutter_test:
